@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="mp.css" />
+    <link rel="icon" href="images/musicNoteIcon-modified.png" />
+  </head>
+  <body>
+    <div id="parent0">
+      <div id="metadata-holder"><div id="metadata"></div></div>
+      <div id="parent1">
+        <div id="now-playing-holder">
+          <h3 id="now-playing-text-div">NOW PLAYING</h3>
+          <div id="now-playing"><span class="move">LOST TIME</span></div>
+        </div>
+        <div id="window">
+          <div id="screen">
+            <img src="images/lost_time_cover.jpg" />
+          </div>
+
+          <div id="controls-holder">
+            <div id="previous">
+              <img class="buttons" src="images/skip_button-modified.png" />
+            </div>
+            <div id="pause-play">
+              <img
+                id="pause"
+                class="buttons"
+                src="images/pause_button-modified.png"
+              />
+            </div>
+            <div id="next">
+              <img class="buttons" src="images/skip_button-modified.png" />
+            </div>
+          </div>
+        </div>
+        <div id="queue-holder">
+          <h3 id="next-song">NEXT SONG</h3>
+          <div id="queue"><span>SEE YOU</span></div>
+        </div>
+      </div>
+      <div id="lyric-box-holder">
+        <div id="lyric-box"><pre id="box"></pre></div>
+      </div>
+      <!-- <div id="queue-holder"><div id="queue"></div></div> -->
+      <script src="mp.js"></script>
+    </div>
+  </body>
+</html>
