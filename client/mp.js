@@ -8,6 +8,8 @@ const imageDiv = document.getElementById("screen").children[0];
 const windowDiv = document.getElementById("window");
 const htmlDiv = document.querySelector("html");
 const lyricsBox = document.getElementById("lyric-box");
+const nextSong = document.getElementById("queue-display");
+const currentSongPlaying = document.getElementById("song-title");
 
 // 'SONG INDEX' IS USED TO MOVE TO THE NEXT SONG IN THE QUEUE
 
@@ -32,6 +34,7 @@ song_library = {
     coverPath: "images/see_you_cover.jpg",
     windowBGC: "rgba(254, 219, 176, 0.89)",
     pageBGC: "rgba(223, 189, 147, 0.97)",
+    lyrics: "see_you_lyrics.txt",
   },
   2: {
     song_name: "SPECIAL",
@@ -39,6 +42,7 @@ song_library = {
     coverPath: "images/special_cover.JPG",
     windowBGC: "rgba(12, 60, 165, 0.83)",
     pageBGC: " rgba(11, 42, 111, 0.9)",
+    lyrics: "special_lyrics.txt",
   },
 };
 
@@ -121,7 +125,9 @@ audio.addEventListener("ended", next);
 
 console.log("here you go", song_library[songIndex]["lyrics"]);
 
-let lyric_holder;
+//THIS FUNCTION FETCHES THE SONG LYRICS FROM THE 'LYRICS DIRECTORY
+//WITH THE HELP OF THE SERVER CREATED IN 'server.js'/ backend
+
 async function getLyrics() {
   try {
     const res = await fetch(
@@ -135,7 +141,44 @@ async function getLyrics() {
   }
 }
 
+// THIS FUNCTION DISPLAYS THE LYRICS OF THE FIRST SONG
 getLyrics().then((words) => {
   const lyricBox = document.getElementById("box");
   lyricBox.textContent = words;
 });
+
+// THIS FUNCTION DISPLAYS THE LYRICS OF THE REST OF THE SONGS
+// EITHER WHEN 'NEXT BUTTON', 'PREVIOUS BUTTON' IS PRESSED OR FIRST SONG IS DONE PLAYING
+
+function getAllLyricsAutomatically() {
+  getLyrics().then((words) => {
+    const lyricBox = document.getElementById("box");
+    lyricBox.textContent = words;
+  });
+}
+
+audio.addEventListener("ended", getAllLyricsAutomatically);
+next_button.addEventListener("click", getAllLyricsAutomatically);
+previous_button.addEventListener("click", getAllLyricsAutomatically);
+
+// DISPLAYING THE NEXT SONG IN THE QUEUE AUTOMATICALLY
+
+function showNextSongInQueue() {
+  const nextSongName =
+    song_library[(songIndex + 1) % song_library_length]["song_name"];
+  nextSong.textContent = nextSongName;
+}
+
+audio.addEventListener("ended", showNextSongInQueue);
+next_button.addEventListener("click", showNextSongInQueue);
+previous_button.addEventListener("click", showNextSongInQueue);
+
+function showCurrentSongPlaying() {
+  const currentSongName =
+    song_library[songIndex % song_library_length]["song_name"];
+  currentSongPlaying.textContent = currentSongName;
+}
+
+audio.addEventListener("ended", showCurrentSongPlaying);
+next_button.addEventListener("click", showCurrentSongPlaying);
+previous_button.addEventListener("click", showCurrentSongPlaying);
